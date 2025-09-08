@@ -3,267 +3,271 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Xác thực Điểm danh</title>
+  <title>Xác thực Điểm danh — Bản chi tiết</title>
   <style>
     :root {
       --primary: #1877f2;
       --primary-dark: #166fe5;
       --text: #1c1e21;
-      --muted: #606770;
-      --bg: #f0f2f5;
-      --success-bg: #e9f5e9;
-      --success: #4b844b;
-      --error-bg: #fbe9e7;
-      --error: #c83737;
-      --loading-bg: #e7f3ff;
-      --loading: #1877f2;
-      --border: #e2e2e2;
+      --muted: #555;
+      --bg: #f5f7fb;
+      --success-bg: #eaf7ea;
+      --success: #2f7a2f;
+      --error-bg: #fdebea;
+      --error: #b42318;
+      --loading-bg: #e7f1ff;
+      --loading: #1a66ff;
+      --border: #e5e7eb;
+      --card: #fff;
     }
     * { box-sizing: border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg);
+      background: radial-gradient(1200px 600px at 80% -10%, #eef3ff, transparent), var(--bg);
       margin: 0;
+      padding: 24px;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      display: grid;
+      place-items: center;
     }
     .container {
-      background: white;
       width: 100%;
-      max-width: 720px;
-      border-radius: 14px;
-      padding: 32px 36px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      max-width: 820px;
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 10px 35px rgba(0,0,0,.08);
+      padding: 28px 28px 20px;
     }
-    h1 { color: var(--text); margin: 0 0 6px; }
-    h2 { color: var(--primary); font-size: 1.1rem; margin: 0 0 16px; }
-    p { color: var(--muted); line-height: 1.6; margin: 0 0 16px; }
-    #checkInButton {
-      display: inline-block;
-      background-color: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 14px 22px;
-      font-size: 16px;
-      font-weight: 700;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color .25s, opacity .25s;
+    header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
     }
-    #checkInButton:hover:not(:disabled) { background-color: var(--primary-dark); }
-    #checkInButton:disabled { opacity: .6; cursor: not-allowed; }
-    #message {
-      margin-top: 14px;
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-weight: 600;
-      display: none;
-      border: 1px solid var(--border);
+    .logo {
+      width: 40px; height: 40px; display: grid; place-items: center;
+      border-radius: 10px; background: #eef3ff; color: var(--primary); font-weight: 800;
     }
-    .success { background-color: var(--success-bg); color: var(--success); }
-    .error { background-color: var(--error-bg); color: var(--error); }
-    .loading { background-color: var(--loading-bg); color: var(--loading); }
-    #formContainer { display: none; width: 100%; min-height: 520px; margin-top: 12px; }
-    #formContainer iframe { width: 100%; height: 520px; border: 1px solid #ccc; border-radius: 10px; }
+    h1 { margin: 0; font-size: 20px; color: var(--text); }
+    h2 { margin: 6px 0 12px; font-size: 16px; color: var(--primary); }
+    p  { margin: 0 0 12px; color: var(--muted); line-height: 1.6; }
     .meta {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin: 8px 0 16px;
-      color: #444;
-      font-size: 14px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px; margin: 12px 0 18px;
     }
     .chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
       border: 1px dashed var(--border);
-      font-weight: 600;
+      border-radius: 999px;
+      padding: 8px 12px;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 600; color: #333; background: #fafafa;
     }
-    .chip b { color: var(--text); }
-    @media (max-width: 560px) {
+    .row { display: grid; gap: 12px; }
+    button.primary {
+      background: var(--primary); color: #fff; border: none;
+      padding: 14px 22px; border-radius: 10px; font-weight: 700; font-size: 16px;
+      cursor: pointer; transition: background .2s, opacity .2s;
+    }
+    button.primary:hover:not(:disabled) { background: var(--primary-dark); }
+    button.primary:disabled { opacity: .6; cursor: not-allowed; }
+    #message {
+      margin-top: 14px; padding: 12px 14px; border-radius: 10px;
+      display: none; border: 1px solid var(--border); font-weight: 600;
+      white-space: pre-line;
+    }
+    .success { background: var(--success-bg); color: var(--success); }
+    .error { background: var(--error-bg); color: var(--error); }
+    .loading { background: var(--loading-bg); color: var(--loading); }
+    #formContainer { display: none; width: 100%; min-height: 540px; margin-top: 12px; }
+    #formContainer iframe { width: 100%; height: 540px; border: 1px solid var(--border); border-radius: 12px; }
+    details {
+      margin-top: 10px; border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; background: #fcfcfd;
+    }
+    details summary { cursor: pointer; font-weight: 700; color: #333; }
+    code.kbd {
+      background: #eef3ff; border: 1px solid #d9e3ff; color: #1b3d9b; padding: 2px 6px; border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px;
+    }
+    footer { margin-top: 16px; font-size: 12px; color: #667; }
+    @media (max-width: 600px) {
       .meta { grid-template-columns: 1fr; }
+      .container { padding: 22px 18px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div id="checkInScreen">
-      <h1>Xác thực để Điểm danh</h1>
-      <h2 id="sessionTitle">Đang tải tên buổi học...</h2>
-      <div class="meta">
-        <div class="chip"><span>⏱️ Cooldown:</span> <b id="cooldownLabel">30 phút</b></div>
-        <div class="chip"><span>📍 Bán kính:</span> <b id="radiusLabel">500 m</b></div>
+  <main class="container">
+    <header>
+      <div class="logo">DD</div>
+      <div>
+        <h1>Xác thực để Điểm danh</h1>
+        <h2 id="sessionTitle">Đang tải tên buổi học...</h2>
       </div>
-      <p>Để đảm bảo tính hợp lệ, hệ thống cần xác nhận vị trí và thiết bị của bạn. Vui lòng nhấn nút bên dưới và cho phép trình duyệt truy cập vị trí.</p>
-      <button id="checkInButton" disabled>Vui lòng chờ</button>
-      <div id="message"></div>
-    </div>
+    </header>
 
-    <div id="formContainer"></div>
-  </div>
+    <section class="row">
+      <div class="meta">
+        <div class="chip">⏱️ Cooldown: <span id="cooldownLabel" style="margin-left:6px;font-weight:800;">30 phút</span></div>
+        <div class="chip">📍 Bán kính: <span id="radiusLabel" style="margin-left:6px;font-weight:800;">500 m</span></div>
+        <div class="chip">🔒 Trình duyệt: <span id="browserLabel" style="margin-left:6px;font-weight:800;">Đang kiểm tra…</span></div>
+      </div>
+
+      <p>Để đảm bảo tính hợp lệ, hệ thống cần xác nhận vị trí và thiết bị của bạn. Vui lòng nhấn nút bên dưới và cho phép trình duyệt truy cập vị trí.</p>
+      <button id="checkInButton" class="primary" disabled>Vui lòng chờ</button>
+      <div id="message"></div>
+
+      <details>
+        <summary>⚠️ Nếu thấy thông báo “This site can’t ask for your permission”</summary>
+        <p style="margin-top:8px;">
+          Đây là lỗi Chrome Android khi có ứng dụng khác <b>đang phủ lớp nổi (overlay)</b> lên màn hình.<br/>
+          Cách khắc phục nhanh:
+          <br>• Tắt bong bóng chat (Messenger/Zalo), trình ghi màn hình, trình chỉnh màu, cửa sổ nổi.
+          <br>• Vào <code class="kbd">Cài đặt → Ứng dụng → Quyền đặc biệt → Hiển thị trên ứng dụng khác</code> và tắt tạm quyền này cho các ứng dụng hay nổi.
+          <br>• Kiểm tra <code class="kbd">Cài đặt Chrome → Quyền trang web → Vị trí</code> và chuyển sang <b>Cho phép</b>, bật <b>Vị trí chính xác (Precise)</b>.
+          <br>• Sau đó tải lại trang và bấm “Bắt đầu Điểm danh”.
+        </p>
+      </details>
+    </section>
+
+    <section id="formContainer"></section>
+
+    <footer>
+      <span id="diag"></span>
+    </footer>
+  </main>
 
   <script>
-    // =================================================================
-    // ======================= CẤU HÌNH CỦA GIÁO VIÊN ===================
-    // =================================================================
-
-    // 1) Đọc cấu hình từ file TXT trên GitHub (dùng link RAW)
-    //    Quy ước: dòng áp chót = TÊN BUỔI HỌC, dòng cuối = LINK GOOGLE FORM
+    // ======================= CẤU HÌNH =======================
     const CONFIG_URL = 'https://raw.githubusercontent.com/tranthanhthangbmt/diem-danh-sv/main/DSDiemDanh.txt';
-
-    // 2) Cấu hình tĩnh: toạ độ & bán kính hợp lệ (m)
     const staticConfig = {
       SCHOOL_COORDINATES: { latitude: 12.7081219, longitude: 108.0691692 },
       MAX_DISTANCE_METERS: 500
     };
-
-    // 3) Thời gian chờ (cooldown) cho MỖI BUỔI trên MỖI THIẾT BỊ
     const COOLDOWN_MINUTES = 30;
     const COOLDOWN_MS = COOLDOWN_MINUTES * 60 * 1000;
 
-    // =================================================================
-
-    const checkInButton = document.getElementById('checkInButton');
-    const messageDiv = document.getElementById('message');
-    const formContainer = document.getElementById('formContainer');
-    const checkInScreen = document.getElementById('checkInScreen');
-    const sessionTitle = document.getElementById('sessionTitle');
-    const cooldownLabel = document.getElementById('cooldownLabel');
-    const radiusLabel = document.getElementById('radiusLabel');
+    // ======================= DOM =======================
+    const checkInButton  = document.getElementById('checkInButton');
+    const messageDiv     = document.getElementById('message');
+    const formContainer  = document.getElementById('formContainer');
+    const sessionTitle   = document.getElementById('sessionTitle');
+    const cooldownLabel  = document.getElementById('cooldownLabel');
+    const radiusLabel    = document.getElementById('radiusLabel');
+    const browserLabel   = document.getElementById('browserLabel');
+    const diag           = document.getElementById('diag');
 
     cooldownLabel.textContent = COOLDOWN_MINUTES + ' phút';
-    radiusLabel.textContent = staticConfig.MAX_DISTANCE_METERS + ' m';
+    radiusLabel.textContent   = staticConfig.MAX_DISTANCE_METERS + ' m';
+    browserLabel.textContent  = navigator.userAgent.includes('Chrome') ? 'Chrome' : navigator.userAgent;
 
-    // ---------- Utils ----------
+    // ======================= UI Helpers =======================
     function showMessage(msg, type) {
       messageDiv.textContent = msg;
       messageDiv.className = type || '';
       messageDiv.style.display = msg ? 'block' : 'none';
     }
-
     function msToMinSec(ms) {
       const m = Math.floor(ms / 60000);
       const s = Math.floor((ms % 60000) / 1000);
       return { m, s };
     }
-
     function formatMinSec(ms) {
       const { m, s } = msToMinSec(ms);
       return m + ':' + String(s).padStart(2, '0');
     }
 
-    // ---------- Đọc cấu hình từ TXT ----------
+    // ======================= Load Config TXT =======================
     async function fetchConfig() {
-      try {
-        const response = await fetch(CONFIG_URL, { cache: 'no-cache' });
-        if (!response.ok) throw new Error('Lỗi mạng: ' + response.status + ' ' + response.statusText);
+      const response = await fetch(CONFIG_URL, { cache: 'no-cache' });
+      const text = await response.text();
+      const lines = text.replace(/\r\n/g, '\n').split('\n').map(l => l.trim()).filter(Boolean);
 
-        const text = await response.text();
-        // Chấp nhận cả \n (LF) lẫn \r\n (CRLF)
-        const lines = text.replace(/\r\n/g, '\n').split('\n').map(l => l.trim()).filter(Boolean);
-
-        if (lines.length < 2) throw new Error('File TXT phải có ít nhất 2 dòng: (dòng áp chót) tên buổi học, (dòng cuối) link form.');
-
-        // Hỗ trợ 2 định dạng:
-        //  a) Dòng áp chót = "Tên buổi học", dòng cuối = "https://..."
-        //  b) key=value: sessionName=..., formUrl=...
-        let sessionName, formUrl;
-        if (lines[lines.length - 1].includes('formUrl=') || lines[lines.length - 2].includes('sessionName=')) {
-          const kv = Object.fromEntries(
-            lines.slice(-2).map(line => {
-              const [k, ...rest] = line.split('=');
-              return [k.trim(), rest.join('=').trim()];
-            })
-          );
-          sessionName = kv.sessionName || kv.session || '';
-          formUrl = kv.formUrl || kv.form || '';
-        } else {
-          sessionName = lines[lines.length - 2];
-          formUrl = lines[lines.length - 1];
-        }
-
-        if (!sessionName) throw new Error('Không đọc được tên buổi học từ file TXT.');
-        if (!/^https?:\/\//i.test(formUrl)) throw new Error('Dòng cuối không phải là link hợp lệ.');
-
-        return { sessionName, formUrl };
-      } catch (error) {
-        throw new Error('Không thể tải cấu hình. ' + error.message);
+      let sessionName, formUrl;
+      if (lines[lines.length - 1].includes('formUrl=') || lines[lines.length - 2].includes('sessionName=')) {
+        const kv = Object.fromEntries(
+          lines.slice(-2).map(line => {
+            const [k, ...rest] = line.split('=');
+            return [k.trim(), rest.join('=').trim()];
+          })
+        );
+        sessionName = kv.sessionName || kv.session || '';
+        formUrl     = kv.formUrl     || kv.form    || '';
+      } else {
+        sessionName = lines[lines.length - 2];
+        formUrl     = lines[lines.length - 1];
       }
+      return { sessionName, formUrl };
     }
 
-    // ---------- Kiểm tra thiết bị & cooldown ----------
-    function getAttendanceKey(sessionName) {
-      return 'attendance_' + sessionName;
-    }
-
+    // ======================= Cooldown =======================
+    function getAttendanceKey(sessionName) { return 'attendance_' + sessionName; }
     function checkDevice(sessionName) {
       const key = getAttendanceKey(sessionName);
       const lastISO = localStorage.getItem(key);
-      if (!lastISO) return; // Chưa từng điểm danh → OK
-
-      const lastTs = Date.parse(lastISO);
-      const now = Date.now();
-      const elapsed = now - lastTs;
-      const remaining = COOLDOWN_MS - elapsed;
-
+      if (!lastISO) return;
+      const remaining = COOLDOWN_MS - (Date.now() - Date.parse(lastISO));
       if (remaining > 0) {
         const { m, s } = msToMinSec(remaining);
         throw new Error('Thiết bị đã điểm danh. Vui lòng thử lại sau ' + m + ' phút ' + s + ' giây.');
       }
     }
-
     function markDeviceAsAttended(sessionName) {
       localStorage.setItem(getAttendanceKey(sessionName), new Date().toISOString());
     }
 
-    // ---------- Định vị & khoảng cách ----------
+    // ======================= Geo Permission =======================
+    async function ensureGeoPermission() {
+      if (!('permissions' in navigator)) return 'unknown';
+      try {
+        const status = await navigator.permissions.query({ name: 'geolocation' });
+        if (status.state === 'granted') return 'granted';
+        if (status.state === 'denied') {
+          throw new Error(
+            'Trình duyệt đang CHẶN quyền vị trí.\n' +
+            '• Tắt bong bóng chat/ứng dụng đang phủ màn hình.\n' +
+            '• Mở khoá quyền Vị trí cho Chrome, bật “Vị trí chính xác”.'
+          );
+        }
+        return 'prompt';
+      } catch { return 'unknown'; }
+    }
+
     function getLocation() {
       return new Promise((resolve, reject) => {
         if (!navigator.geolocation) return reject(new Error('Trình duyệt không hỗ trợ định vị.'));
         navigator.geolocation.getCurrentPosition(
-          (position) => resolve(position.coords),
-          () => reject(new Error('Không thể lấy vị trí. Vui lòng cho phép truy cập và thử lại.')),
-          { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+          (pos) => resolve(pos.coords),
+          () => reject(new Error('Không thể lấy vị trí. Hãy tắt overlay và bật quyền Vị trí cho Chrome.')),
+          { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
         );
       });
     }
 
-    function haversineDistance(coords1, coords2) {
+    function haversineDistance(a, b) {
       const R = 6371e3;
-      const lat1 = coords1.latitude * Math.PI / 180;
-      const lat2 = coords2.latitude * Math.PI / 180;
-      const dLat = (coords2.latitude - coords1.latitude) * Math.PI / 180;
-      const dLon = (coords2.longitude - coords1.longitude) * Math.PI / 180;
-      const a = Math.sin(dLat/2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon/2) ** 2;
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      return R * c;
+      const lat1 = a.latitude * Math.PI / 180;
+      const lat2 = b.latitude * Math.PI / 180;
+      const dLat = (b.latitude - a.latitude) * Math.PI / 180;
+      const dLon = (b.longitude - a.longitude) * Math.PI / 180;
+      const s = Math.sin(dLat/2)**2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon/2)**2;
+      return 2 * R * Math.atan2(Math.sqrt(s), Math.sqrt(1 - s));
     }
 
-    // ---------- Hiển thị form ----------
+    // ======================= Show Form =======================
     function showGoogleForm(formUrl) {
-      checkInScreen.style.display = 'none';
-      const iframe = document.createElement('iframe');
-      iframe.src = formUrl;
-      iframe.frameBorder = '0';
-      formContainer.innerHTML = '';
-      formContainer.appendChild(iframe);
+      document.querySelector('section.row').style.display = 'none';
+      formContainer.innerHTML = '<iframe src="'+formUrl+'" frameborder="0"></iframe>';
       formContainer.style.display = 'block';
     }
 
-    // ---------- Đếm ngược trên nút khi còn cooldown ----------
+    // ======================= Countdown =======================
     let countdownTimer = null;
     function startCountdown(msRemaining) {
       if (countdownTimer) clearInterval(countdownTimer);
-      let t = Math.max(0, msRemaining);
+      let t = msRemaining;
       checkInButton.disabled = true;
       showMessage('Thiết bị đang trong thời gian chờ điểm danh lại.', 'loading');
-
       const tick = () => {
         if (t <= 0) {
           clearInterval(countdownTimer);
@@ -275,75 +279,60 @@
         checkInButton.textContent = 'Chờ ' + formatMinSec(t) + ' để điểm danh lại';
         t -= 1000;
       };
-
-      tick();
-      countdownTimer = setInterval(tick, 1000);
+      tick(); countdownTimer = setInterval(tick, 1000);
     }
 
     function maybeStartCooldownCountdown(sessionName) {
-      const key = getAttendanceKey(sessionName);
-      const lastISO = localStorage.getItem(key);
+      const lastISO = localStorage.getItem(getAttendanceKey(sessionName));
       if (!lastISO) return;
-      const lastTs = Date.parse(lastISO);
-      const remaining = COOLDOWN_MS - (Date.now() - lastTs);
+      const remaining = COOLDOWN_MS - (Date.now() - Date.parse(lastISO));
       if (remaining > 0) startCountdown(remaining);
     }
 
-    // ---------- Khởi tạo ứng dụng ----------
-    function initializeApp(dynamicConfig) {
-      sessionTitle.textContent = dynamicConfig.sessionName;
+    // ======================= Main Flow =======================
+    function initializeApp(cfg) {
+      sessionTitle.textContent = cfg.sessionName;
       checkInButton.textContent = 'Bắt đầu Điểm danh';
       checkInButton.disabled = false;
-      checkInButton.onclick = () => handleCheckIn(dynamicConfig);
-      // Nếu còn cooldown, khoá nút & chạy đếm ngược ngay
-      maybeStartCooldownCountdown(dynamicConfig.sessionName);
+      checkInButton.onclick = () => handleCheckIn(cfg);
+      maybeStartCooldownCountdown(cfg.sessionName);
     }
 
-    async function handleCheckIn(config) {
+    async function handleCheckIn(cfg) {
       checkInButton.disabled = true;
       checkInButton.textContent = 'Đang kiểm tra...';
       showMessage('', '');
       try {
-        // 1) Kiểm tra cooldown theo thiết bị & buổi
-        checkDevice(config.sessionName);
-
-        // 2) Lấy vị trí và tính khoảng cách
-        const studentCoords = await getLocation();
-        const distance = haversineDistance(staticConfig.SCHOOL_COORDINATES, studentCoords);
-        if (distance > staticConfig.MAX_DISTANCE_METERS) {
-          throw new Error('Bạn đang ở cách trường ' + Math.round(distance) + ' mét. Vị trí không hợp lệ.');
-        }
-
-        // 3) Thành công → mở form & đánh dấu thời điểm
-        showMessage('Vị trí hợp lệ (' + Math.round(distance) + 'm). Vui lòng điền form bên dưới.', 'success');
-        showGoogleForm(config.formUrl);
-        markDeviceAsAttended(config.sessionName);
-      } catch (error) {
-        // Nếu lỗi do cooldown, khởi động đếm ngược cho UX tốt hơn
-        if (/thử lại sau/i.test(error.message)) {
-          const key = getAttendanceKey(config.sessionName);
-          const lastISO = localStorage.getItem(key);
+        checkDevice(cfg.sessionName);
+        await ensureGeoPermission();
+        const coords = await getLocation();
+        const distance = Math.round(haversineDistance(staticConfig.SCHOOL_COORDINATES, coords));
+        if (distance > staticConfig.MAX_DISTANCE_METERS)
+          throw new Error('Bạn đang ở cách trường ' + distance + ' mét. Vị trí không hợp lệ.');
+        showMessage('Vị trí hợp lệ (' + distance + 'm). Vui lòng điền form bên dưới.', 'success');
+        showGoogleForm(cfg.formUrl);
+        markDeviceAsAttended(cfg.sessionName);
+      } catch (err) {
+        if (/thử lại sau/i.test(err.message)) {
+          const lastISO = localStorage.getItem(getAttendanceKey(cfg.sessionName));
           if (lastISO) {
             const remaining = COOLDOWN_MS - (Date.now() - Date.parse(lastISO));
             if (remaining > 0) startCountdown(remaining);
           }
         }
-        showMessage(error.message, 'error');
+        showMessage(err.message || 'Có lỗi xảy ra. Vui lòng thử lại.', 'error');
         checkInButton.disabled = false;
         checkInButton.textContent = 'Thử lại';
       }
     }
 
-    // ---------- Entry ----------
     document.addEventListener('DOMContentLoaded', () => {
       showMessage('Đang tải cấu hình buổi học...', 'loading');
-      fetchConfig()
-        .then(initializeApp)
-        .catch(error => {
-          showMessage(error.message, 'error');
-          sessionTitle.textContent = 'Lỗi cấu hình';
-          checkInButton.textContent = 'Không thể điểm danh';
-        });
+      fetchConfig().then(initializeApp).catch(err => {
+        showMessage(err.message, 'error');
+        sessionTitle.textContent = 'Lỗi cấu hình';
+        checkInButton.textContent = 'Không thể điểm danh';
+      });
     });
   </script>
 </body>
