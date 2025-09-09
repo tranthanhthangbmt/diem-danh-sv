@@ -107,11 +107,6 @@
     </header>
 
     <section class="row">
-      <div class="meta">
-        <div class="chip">⏱️ Cooldown: <span id="cooldownLabel" style="margin-left:6px;font-weight:800;">30 phút</span></div>
-        <div class="chip">📍 Bán kính: <span id="radiusLabel" style="margin-left:6px;font-weight:800;">500 m</span></div>
-        <div class="chip">🔒 Trình duyệt: <span id="browserLabel" style="margin-left:6px;font-weight:800;">Đang kiểm tra…</span></div>
-      </div>
 
       <p>Để đảm bảo tính hợp lệ, hệ thống cần xác nhận vị trí và thiết bị của bạn. Vui lòng nhấn nút bên dưới và cho phép trình duyệt truy cập vị trí.</p>
       <button id="checkInButton" class="primary" disabled>Vui lòng chờ</button>
@@ -144,7 +139,7 @@
       SCHOOL_COORDINATES: { latitude: 12.7081219, longitude: 108.0691692 },
       MAX_DISTANCE_METERS: 500
     };
-    const COOLDOWN_MINUTES = 30;
+    const COOLDOWN_MINUTES = 180;
     const COOLDOWN_MS = COOLDOWN_MINUTES * 60 * 1000;
 
     // ======================= DOM =======================
@@ -337,3 +332,4 @@
   </script>
 </body>
 </html>
+
